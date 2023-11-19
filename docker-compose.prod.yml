@@ -24,6 +24,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`keymoov.com`)"
       - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolalloworigin=*"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.testheader.headers.addvaryheader=true"
 
   backend:
     image: europe-west9-docker.pkg.dev/keymoov/keymoov-backend/latest
@@ -39,6 +43,10 @@ services:
       - "traefik.http.routers.backend.rule=Host(`api.keymoov.com`)"
       - "traefik.http.routers.backend.entrypoints=web"
       - "traefik.http.services.backend.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolalloworigin=*"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.testheader.headers.addvaryheader=true"
 
   play:
     image: europe-west9-docker.pkg.dev/keymoov/keymoov-play-service/latest
@@ -55,6 +63,10 @@ services:
       - "traefik.http.routers.play.rule=Host(`play.keymoov.com`)"
       - "traefik.http.routers.play.entrypoints=web"
       - "traefik.http.services.my_custom_image.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolalloworigin=*"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.testheader.headers.addvaryheader=true"
 
   upload:
     image: europe-west9-docker.pkg.dev/keymoov/keymoov-upload-service/latest
@@ -71,3 +83,7 @@ services:
       - "traefik.http.routers.upload.rule=Host(`upload.keymoov.com`)"
       - "traefik.http.routers.upload.entrypoints=web"
       - "traefik.http.services.my_custom_image.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolalloworigin=*"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.testheader.headers.addvaryheader=true"
