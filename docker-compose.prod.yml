@@ -54,6 +54,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.play.rule=Host(`play.keymoov.com`)"
       - "traefik.http.routers.play.entrypoints=web"
+      - "traefik.http.services.my_custom_image.loadbalancer.server.port=80"
 
   upload:
     image: europe-west9-docker.pkg.dev/keymoov/keymoov-upload-service/latest
@@ -69,3 +70,4 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.upload.rule=Host(`upload.keymoov.com`)"
       - "traefik.http.routers.upload.entrypoints=web"
+      - "traefik.http.services.my_custom_image.loadbalancer.server.port=80"
