@@ -22,7 +22,7 @@ services:
     image: europe-west9-docker.pkg.dev/keymoov/keymoov-frontend/latest
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`frontend.localhost`)"
+      - "traefik.http.routers.frontend.rule=Host(`keymoov.com`)"
       - "traefik.http.routers.frontend.entrypoints=web"
 
   backend:
@@ -36,42 +36,34 @@ services:
       - SERVER_PORT=${SERVER_PORT}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`api.localhost`)"
+      - "traefik.http.routers.backend.rule=Host(`api.keymoov.com`)"
       - "traefik.http.routers.backend.entrypoints=web"
       - "traefik.http.services.backend.loadbalancer.server.port=80"
 
-  # play:
-  #   image: europe-west9-docker.pkg.dev/keymoov/keymoov-play-service/latest
-  #   environment:
-  #     - SERVER_PORT=80
-  #     - BUCKET_NAME=${BUCKET_NAME}
-  #     - PROJECT_ID=${PROJECT_ID}
-  #     - KEY_FILENAME=${KEY_FILENAME}
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.http.routers.backend.rule=Host(`play.localhost`)"
-  #     - "traefik.http.routers.backend.entrypoints=web"
-
-  # upload:
-  #   image: europe-west9-docker.pkg.dev/keymoov/keymoov-upload-service/latest
-  #   environment:
-  #     - SERVER_PORT=80
-  #     - BUCKET_NAME=${BUCKET_NAME}
-  #     - PROJECT_ID=${PROJECT_ID}
-  #     - KEY_FILENAME=${KEY_FILENAME}
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.http.routers.backend.rule=Host(`upload.localhost`)"
-  #     - "traefik.http.routers.backend.entrypoints=web"
-
-  watchtower:     
-    image: containrrr/watchtower
-    container_name: watchtower 
-    restart: always 
+  play:
+    image: europe-west9-docker.pkg.dev/keymoov/keymoov-play-service/latest
     environment:
-      WATCHTOWER_POLL_INTERVAL: 300 
-      TZ: America/Chicago 
-      WATCHTOWER_CLEANUP: "true" 
-      WATCHTOWER_DEBUG: "true"
-    volumes: 
-      - /var/run/docker.sock:/var/run/docker.sock
+      - SERVER_PORT=80
+      - BUCKET_NAME=${BUCKET_NAME}
+      - PROJECT_ID=${PROJECT_ID}
+      - KEY_FILENAME=/googleKey.json
+    volumes:
+      - ${KEY_FILENAME}:/googleKey.json:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.play.rule=Host(`play.keymoov.com`)"
+      - "traefik.http.routers.play.entrypoints=web"
+
+  upload:
+    image: europe-west9-docker.pkg.dev/keymoov/keymoov-upload-service/latest
+    environment:
+      - SERVER_PORT=80
+      - BUCKET_NAME=${BUCKET_NAME}
+      - PROJECT_ID=${PROJECT_ID}
+      - KEY_FILENAME=/googleKey.json
+    volumes:
+      - ${KEY_FILENAME}:/googleKey.json:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.upload.rule=Host(`upload.keymoov.com`)"
+      - "traefik.http.routers.upload.entrypoints=web"
