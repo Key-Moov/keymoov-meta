@@ -64,6 +64,7 @@ services:
       - BUCKET_NAME=${BUCKET_NAME}
       - PROJECT_ID=${PROJECT_ID}
       - KEY_FILENAME=/googleKey.json
+      - FILE_SIZE_LIMIT=${UPLOAD_FILE_SIZE_LIMIT}
     volumes:
       - ${KEY_FILENAME}:/googleKey.json:ro
     labels:
