@@ -82,4 +82,4 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.boards.rule=Host(`boards.keymoov.com`)"
       - "traefik.http.routers.boards.entrypoints=web"
-      - "traefik.http.services.upload.loadbalancer.server.port=80"
+      - "traefik.http.services.boards.loadbalancer.server.port=80"
