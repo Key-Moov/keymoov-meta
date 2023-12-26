@@ -83,3 +83,15 @@ services:
       - "traefik.http.routers.boards.rule=Host(`boards.keymoov.com`)"
       - "traefik.http.routers.boards.entrypoints=web"
       - "traefik.http.services.boards.loadbalancer.server.port=80"
+
+  database:
+    image: postgres:15.3-alpine3.18
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
