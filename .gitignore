@@ -1,2 +1,5 @@
 .env
 .idea
+key.json
+dump.sql
+postgres-data
