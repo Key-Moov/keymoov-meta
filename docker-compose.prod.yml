@@ -20,6 +20,7 @@ services:
 
   frontend:
     image: europe-west9-docker.pkg.dev/keymoov/keymoov-frontend/latest
+    restart: always
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`keymoov.com`)"
