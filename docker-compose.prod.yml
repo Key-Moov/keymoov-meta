@@ -35,6 +35,8 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - SERVER_PORT=${SERVER_PORT}
+      - UPLOAD_HOST=${UPLOAD_HOST}
+      - PLAY_HOST=${PLAY_HOST}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`api.keymoov.com`)"

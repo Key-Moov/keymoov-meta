@@ -3,7 +3,7 @@ version: '3'
 services:
   traefik:
     image: "traefik:v2.10"
-    restart: always 
+    restart: always
     container_name: "traefik"
     command:
       #- "--log.level=DEBUG"
@@ -19,6 +19,7 @@ services:
 
   frontend:
     image: europe-west9-docker.pkg.dev/keymoov/keymoov-frontend/latest
+    restart: always
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`app.localhost`)"
@@ -32,13 +33,15 @@ services:
 
   backend:
     image: europe-west9-docker.pkg.dev/keymoov/keymoov-backend/latest
-    restart: always 
+    restart: always
     environment:
       - DB_HOST=db
       - DB_USERNAME=postgres
       - DB_PASSWORD=123123123
       - DB_NAME=postgres
       - SERVER_PORT=${SERVER_PORT}
+      - UPLOAD_HOST=${UPLOAD_HOST}
+      - PLAY_HOST=${PLAY_HOST}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`api.localhost`)"
