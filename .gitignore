@@ -3,3 +3,4 @@
 key.json
 dump.sql
 postgres-data
+.DS_Store
