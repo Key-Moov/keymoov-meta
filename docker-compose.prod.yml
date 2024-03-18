@@ -91,10 +91,22 @@ services:
     image: postgres:15.3-alpine3.18
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
+    expose:
+      - 5432
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+
+  backup:
+    image: europe-west9-docker.pkg.dev/keymoov/backup-service/latest
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - TELEGRAM_BACKUP_TOKEN=${TELEGRAM_BACKUP_TOKEN}
+      - TELEGRAM_BACKUP_CHAT_ID=${TELEGRAM_BACKUP_CHAT_ID}
+    volumes:
+      - ${BACKUP_ENV}:/.backup-env
