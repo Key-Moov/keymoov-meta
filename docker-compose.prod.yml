@@ -37,6 +37,9 @@ services:
       - SERVER_PORT=${SERVER_PORT}
       - UPLOAD_HOST=${UPLOAD_HOST}
       - PLAY_HOST=${PLAY_HOST}
+      - TELEGRAM_LOG_BOT_TOKEN=${TELEGRAM_LOG_BOT_TOKEN}
+      - TELEGRAM_LOG_CHAT_ID=${BACKEND_TELEGRAM_LOG_CHAT_ID}
+      - LOG_ENV=prod
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`api.keymoov.com`)"
